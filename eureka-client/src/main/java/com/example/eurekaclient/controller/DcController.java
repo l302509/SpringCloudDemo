@@ -2,12 +2,18 @@ package com.example.eurekaclient.controller;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSONObject;
@@ -18,15 +24,22 @@ import com.netflix.discovery.shared.Applications;
 import com.netflix.loadbalancer.Server;
 @RestController
 public class DcController {
+	
+	private static Logger log = LoggerFactory.getLogger(DcController.class);
 
 	@Autowired
 	DiscoveryClient discoveryClient;
 	@Autowired
 	EurekaClient eurekaClient;
 
-	@GetMapping("/dc")
-	public String dc() throws InterruptedException {
+	@RequestMapping("/dc")
+	public String dc(HttpServletRequest request) throws InterruptedException {
 		//Thread.sleep(5000L);
+		//System.err.println("==========="+dc);
+		Enumeration<String> headerNames = request.getHeaderNames();
+		while(headerNames.hasMoreElements()){
+			log.error(headerNames.nextElement());
+		}
 		String services = "Services: " + discoveryClient.getServices();
 		System.out.println(services);
 		return services;

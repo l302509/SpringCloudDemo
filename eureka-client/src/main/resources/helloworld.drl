@@ -1,0 +1,14 @@
+package helloworld;
+
+rule "HelloWorld"
+    when
+        eval(true)
+    then
+        System.err.println("HelloWorld");
+end
+rule "SayHello"
+    when
+        eval(true)
+    then
+        System.err.println("SayHello");
+end

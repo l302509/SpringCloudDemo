@@ -37,6 +37,11 @@
 		    <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 		    <version>1.4.5.RELEASE</version>
 		</dependency> -->
+		<!-- 分布式服务跟踪 -->
+		<dependency>
+		    <groupId>org.springframework.cloud</groupId>
+		    <artifactId>spring-cloud-starter-sleuth</artifactId>
+		</dependency>
 		
 		<dependency>
 		    <groupId>org.springframework.cloud</groupId>
@@ -49,6 +54,18 @@
 			<artifactId>fastjson</artifactId>
 			<version>1.2.41</version>
 		</dependency>
+		<!-- drools 规则 -->
+		<dependency>
+	        <groupId>org.kie</groupId>
+	        <artifactId>kie-api</artifactId>
+	        <version>6.5.0.Final</version>
+	    </dependency>
+	    <dependency>
+	        <groupId>org.drools</groupId>
+	        <artifactId>drools-compiler</artifactId>
+	        <version>6.5.0.Final</version>
+	        <scope>runtime</scope>
+	    </dependency>
 		
 
 		<dependency>

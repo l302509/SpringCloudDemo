@@ -1,0 +1,139 @@
+<!-- BEGIN: Subheader -->
+<div class="m-subheader">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">
+                环境配置
+            </h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="#" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">
+                    -
+                </li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">
+                            环境配置中心
+                        </span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">
+                    -
+                </li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">
+                            环境配置
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- END: Subheader -->
+<div class="m-content">
+    <div class="m-portlet m-portlet--mobile">
+        <div class="m-portlet__body">
+            <div class="m-form m-form--label-align-right m--margin-top-10 m--margin-bottom-20">
+                <div class="row align-items-center">
+                    <div class="col-xl-8 order-2 order-xl-1">
+                        <div class="form-group m-form__group row align-items-center">
+                            <div class="col-md-4">
+                                <div class="m-input-icon m-input-icon--left">
+                                    <input class="form-control m-input m-input--solid" id="generalSearch" placeholder="请输入搜索关键字..." type="text">
+                                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                                        <span>
+                                            <i class="la la-search"></i>
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 order-1 order-xl-2 m--align-right">
+                        <button type="button" class="btn btn-info m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill" (click)="createEnv()">
+                            <span>
+                                <i class="la la-plus">
+                                </i>
+                                新增环境
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div id="m_datatable"></div>
+        </div>
+        <!--begin::Modal-->
+        <div class="modal fade" id="m_modal_1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered m-form m-form--state" role="document">
+                <form class="modal-content" id="env-config-form">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel" *ngIf="formData.type != 'edit'">
+                            新增环境
+                        </h5>
+                        <h5 class="modal-title" id="exampleModalLabel" *ngIf="formData.type == 'edit'">
+                            编辑环境
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">
+                                &times;
+                            </span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="m-form__content">
+                            <div class="form-group m-form__group" style="padding-top: 0;">
+                                <label for="envName" class="col-form-label col-sm-12">
+                                    * 环境名:
+                                </label>
+                                <div class="col-sm-12">
+                                    <input type="text" class="form-control" id="envName" name="envName" [(ngModel)]="formData.envName">
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group" style="padding-top: 0;">
+                                <label for="registryAddress" class="col-form-label col-sm-12">
+                                    注册中心地址:
+                                    <i class="fa fa-question-circle" data-toggle="m-popover" data-placement="top" data-content="当配置中心没有纳入eureka、consul等注册中心管理的话，“注册中心地址 ”留空，“配置中心服务名或绝对地址 ”中填配置中心的具体访问地址，比如：http://config.xxx.com/"></i>
+                                </label>
+                                <div class="col-sm-12">
+                                    <input class="form-control" id="registryAddress" [(ngModel)]="formData.registryAddress" name="registryAddress">
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group" style="padding-top: 0;">
+                                <label for="configServerName" class="col-form-label col-sm-12">
+                                    * 配置中心服务名或绝对地址:
+                                </label>
+                                <div class="col-sm-12">
+                                    <input class="form-control" id="configServerName" [(ngModel)]="formData.configServerName" name="configServerName">
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group" style="padding-top: 0;">
+                                <label for="contextPath" class="col-form-label col-sm-12">
+                                    配置中心访问前缀:
+                                    <i class="fa fa-question-circle" data-toggle="m-popover" data-placement="top" data-content="如果配置中心配置了访问前缀，即：spring.cloud.config.server.prefix参数值，那么在“配置中心访问前缀”中也做一样的配置，不然留空即可"></i>
+                                </label>
+                                <div class="col-sm-12">
+                                    <input class="form-control" id="contextPath" [(ngModel)]="formData.contextPath" name="contextPath">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            关闭
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            保存
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- END EXAMPLE TABLE PORTLET-->
+</div>

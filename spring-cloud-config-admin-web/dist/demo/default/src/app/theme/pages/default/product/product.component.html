@@ -1,0 +1,155 @@
+<!-- BEGIN: Subheader -->
+<div class="m-subheader">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">
+                项目配置
+            </h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="#" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">
+                    -
+                </li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">
+                            项目管理中心
+                        </span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">
+                    -
+                </li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">
+                            项目管理
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- END: Subheader -->
+<div class="m-content">
+    <div class="m-portlet m-portlet--mobile">
+        <div class="m-portlet__body">
+            <div class="m-form m-form--label-align-right m--margin-top-10 m--margin-bottom-20">
+                <div class="row align-items-center">
+                    <div class="col-xl-8 order-2 order-xl-1">
+                        <div class="form-group m-form__group row align-items-center">
+                            <div class="col-md-4">
+                                <div class="m-input-icon m-input-icon--left">
+                                    <input class="form-control m-input m-input--solid" id="generalSearch" placeholder="请输入搜索关键字..." type="text">
+                                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                                        <span>
+                                            <i class="la la-search"></i>
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 order-1 order-xl-2 m--align-right">
+                        <button type="button" class="btn btn-info m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill" (click)="createProduct()">
+                            <span>
+                                <i class="la la-plus">
+                                </i>
+                                新增项目
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div id="m_datatable"></div>
+        </div>
+        <!--begin::Modal-->
+        <div class="modal fade" id="m_modal_1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-md modal-dialog-centered  m-form m-form--state" role="document">
+                <form class="modal-content" id="id-product-form">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel" *ngIf="formData.type != 'edit'">
+                            新增项目
+                        </h5>
+                        <h5 class="modal-title" id="exampleModalLabel" *ngIf="formData.type == 'edit'">
+                            编辑项目
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">
+                                &times;
+                            </span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="m-form__content">
+                            <div class="form-group m-form__group" style="padding-top: 0;">
+                                <label for="product" class="col-form-label col-sm-12">
+                                    * 项目名称:
+                                </label>
+                                <div class="col-sm-12">
+                                    <input class="form-control" id="product" [(ngModel)]="formData.name" name="productName">
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group" style="padding-top: 0;">
+                                <label for="productEnv" class="col-form-label col-sm-12">
+                                    * 部署环境:
+                                </label>
+                                <div class="col-sm-12">
+                                    <div class="m-checkbox-list">
+                                        <ng-container *ngFor="let item of envList; let i = index">
+                                            <label class="m-env-item m-checkbox">
+                                                <input type="checkbox" [(ngModel)]="item.checked" id="productEnv" name="productEnv"> {{item.name}}
+                                                <span></span>
+                                            </label>
+                                        </ng-container>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group" style="padding-top: 0;">
+                                <label for="labels" class="col-form-label col-sm-12">
+                                    配置版本:
+                                </label>
+                                <div class="col-sm-12">
+                                    <ng-container *ngFor="let item of formData.labels;let i = index">
+                                        <button type="button" class="btn btn-primary btn-sm m-btn m-btn--custom active m-label">
+                                            {{item.name}}
+                                            <span class="m-badge m-badge--metal m-label_deleteBtn" (click)="remove(i)" *ngIf="item.name != 'master'">X</span>
+                                        </button>
+                                    </ng-container>
+                                    <ng-container *ngIf="formData.type == 'edit'">
+                                        <ng-container *ngIf="bInAdd">
+                                            <input class="form-control m-input" placeholder="请输入版本" type="text" [(ngModel)]="label" style="width: 120px;display: inline-block; vertical-align: bottom;"
+                                                [ngModelOptions]="{standalone: true}">
+                                            <button type="button" class="btn btn-danger btn-sm m-btn m-btn--custom" (click)="addLabel2Array()" style="margin-top: 5px;">
+                                                确定
+                                            </button>
+                                        </ng-container>
+                                        <ng-container *ngIf="!bInAdd">
+                                            <button type="button" class="btn btn-info btn-sm m-btn m-btn--custom" (click)="addLabel()" style="margin-top: 5px;">
+                                                新增
+                                            </button>
+                                        </ng-container>
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            关闭
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            保存
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- END EXAMPLE TABLE PORTLET-->
+</div>

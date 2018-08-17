@@ -1,0 +1,145 @@
+<!-- BEGIN: Subheader -->
+<div class="m-subheader">
+	<div class="d-flex align-items-center">
+		<div class="mr-auto">
+			<h3 class="m-subheader__title">
+				概况总览
+			</h3>
+		</div>
+	</div>
+</div>
+<!-- END: Subheader -->
+<!--Begin::Section-->
+<div class="m-content">
+	<div class="row">
+		<div class="col-xl-8">
+			<div class="m-portlet m-portlet--full-height">
+				<div class="m-portlet__head">
+					<div class="m-portlet__head-caption">
+						<div class="m-portlet__head-title">
+							<h3 class="m-portlet__head-text">
+								环境总览
+							</h3>
+						</div>
+					</div>
+
+					<div class="m-portlet__head-tools">
+						<div class="m-input-icon m-input-icon--left">
+							<input class="form-control m-input m-input--solid" id="generalSearch" placeholder="请输入搜索关键字..." type="text">
+							<span class="m-input-icon__icon m-input-icon__icon--left">
+								<span>
+									<i class="la la-search"></i>
+								</span>
+							</span>
+						</div>
+					</div>
+				</div>
+				<div class="m-portlet__body">
+					<div id="m_datatable"></div>
+				</div>
+			</div>
+		</div>
+		<div class="col-xl-4">
+			<div class="m-portlet m-portlet--full-height">
+				<div class="m-portlet__head">
+					<div class="m-portlet__head-caption">
+						<div class="m-portlet__head-title">
+							<h3 class="m-portlet__head-text">
+								最近操作
+							</h3>
+						</div>
+					</div>
+					<div class="m-portlet__head-tools m-subheader" style="padding: 0;">
+						<span class="m-subheader__daterange" id="m_dashboard_daterangepicker" style="box-shadow: 0 0 2px #ccc;">
+							<span class="m-subheader__daterange-label">
+								<span class="m-subheader__daterange-title"></span>
+								<span class="m-subheader__daterange-date m--font-brand"></span>
+							</span>
+							<a href="#" class="btn btn-sm btn-brand m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill">
+								<i class="la la-angle-down"></i>
+							</a>
+						</span>
+					</div>
+				</div>
+				<div class="m-portlet__body">
+					<div class="m-scrollable" data-scrollable="true" data-max-height="400" style="height: 400px; overflow: hidden;">
+						<div class="m-list-timeline m-list-timeline--skin-light">
+							<div class="m-list-timeline__items">
+								<ng-container *ngIf="services.length > 0">
+									<div class="m-list-timeline__item" *ngFor="let service of services">
+										<span class="m-list-timeline__badge m-list-timeline__badge--success"></span>
+										<span class="m-list-timeline__text">
+											<span style="font-weight: 600; color: #5d5d5d;">{{service.serviceName}}</span>
+											<span style="font-size: 12px;">服务被创建，负责人：{{service.author}}</span>
+										</span>
+										<span class="m-list-timeline__time">
+											{{service.createTime}}
+										</span>
+									</div>
+								</ng-container>
+								<ng-container *ngIf="services.length == 0">
+									<div class="m-list-timeline__item">
+										<span class="m-list-timeline__badge m-list-timeline__badge--success"></span>
+										<span class="m-list-timeline__text">
+											<span style="font-weight: 600; color: #5d5d5d;">当前操作记录还在开发中~</span>
+										</span>
+									</div>
+								</ng-container>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--end:: Widgets/Audit Log-->
+</div>
+<!--end:: Widgets/Audit Log-->
+<!--End::Section-->
+<div class="modal fade" id="m_modal_1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog  modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">
+					配置中心信息
+				</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">
+						&times;
+					</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form>
+					<div class="form-group">
+						<label for="config-server-url" class="form-control-label">
+							Url:
+						</label>
+						<input type="text" class="form-control" id="config-server-url" [(ngModel)]="modalData.url" [ngModelOptions]="{standalone: true}"
+						    disabled>
+					</div>
+					<div class="form-group">
+						<label for="message-text" class="form-control-label">
+							状态:
+						</label>
+						<div class="form-control">
+							<ng-container *ngIf="modalData.encryptStatus === 'OK'">
+								<span class="m-badge m-badge--success m-badge--wide" style="margin-right: 15px;">
+								</span>
+							</ng-container>
+							<ng-container *ngIf="modalData.encryptStatus !== 'OK'">
+								<span class="m-badge m-badge--danger m-badge--wide" style="margin-right: 15px;">
+								</span>
+							</ng-container>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">
+					关闭
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
